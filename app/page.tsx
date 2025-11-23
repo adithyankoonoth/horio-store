@@ -131,7 +131,7 @@ export default function Home() {
                 animate={{ scale: [1, 1.2, 1] }}
                 transition={{ duration: 2, repeat: Infinity }}
               />
-              <span className="text-sm text-gray-700 font-medium">Launching early 2026</span>
+              <span className="text-sm text-gray-700 font-medium">Launching early 2025</span>
             </motion.div>
             
             <motion.h1 
@@ -236,7 +236,7 @@ export default function Home() {
               whileHover={{ y: -3 }}
               className="text-center cursor-pointer"
             >
-              <AnimatedCounter value={50} suffix="+" />
+              <AnimatedCounter value={500} suffix="+" />
               <p className="text-gray-700 font-medium">Software solutions</p>
             </motion.div>
 
@@ -248,7 +248,7 @@ export default function Home() {
               whileHover={{ y: -3 }}
               className="text-center cursor-pointer"
             >
-              <AnimatedCounter value={20} suffix="+" />
+              <AnimatedCounter value={50} suffix="+" />
               <p className="text-gray-700 font-medium">Categories</p>
             </motion.div>
 
@@ -260,7 +260,7 @@ export default function Home() {
               whileHover={{ y: -3 }}
               className="text-center cursor-pointer"
             >
-              <AnimatedCounter value={10} suffix="+" />
+              <AnimatedCounter value={1000} suffix="+" />
               <p className="text-gray-700 font-medium">Happy customers</p>
             </motion.div>
           </div>
@@ -306,15 +306,20 @@ export default function Home() {
                 }}
                 viewport={{ once: true, margin: "-50px" }}
                 whileHover={{ 
-                  y: -4,
-                  transition: { duration: 0.2 }
+                  y: -8, 
+                  borderColor: '#000',
+                  transition: { 
+                    duration: 0.3,
+                    ease: [0.22, 1, 0.36, 1]
+                  }
                 }}
-                className="group bg-white border-2 border-gray-300 rounded-xl p-8 hover:border-black cursor-pointer transition-all duration-200"
+                className="group bg-white border-2 border-gray-300 rounded-xl p-8 hover:shadow-2xl cursor-pointer"
+                style={{ transition: 'box-shadow 0.3s ease' }}
               >
                 <div className="text-sm text-gray-600 mb-3 font-semibold">
                   {cat.count} solutions
                 </div>
-                <h3 className="text-2xl font-bold mb-2 text-gray-900">{cat.title}</h3>
+                <h3 className="text-2xl font-bold mb-2 text-gray-900 group-hover:text-black transition-colors duration-300">{cat.title}</h3>
                 <p className="text-gray-700 font-medium">{cat.desc}</p>
               </motion.div>
             ))}
