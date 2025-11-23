@@ -131,7 +131,7 @@ export default function Home() {
                 animate={{ scale: [1, 1.2, 1] }}
                 transition={{ duration: 2, repeat: Infinity }}
               />
-              <span className="text-sm text-gray-700 font-medium">Launching early 2025</span>
+              <span className="text-sm text-gray-700 font-medium">Launching early 2026</span>
             </motion.div>
             
             <motion.h1 
@@ -236,7 +236,7 @@ export default function Home() {
               whileHover={{ y: -3 }}
               className="text-center cursor-pointer"
             >
-              <AnimatedCounter value={500} suffix="+" />
+              <AnimatedCounter value={50} suffix="+" />
               <p className="text-gray-700 font-medium">Software solutions</p>
             </motion.div>
 
@@ -248,7 +248,7 @@ export default function Home() {
               whileHover={{ y: -3 }}
               className="text-center cursor-pointer"
             >
-              <AnimatedCounter value={50} suffix="+" />
+              <AnimatedCounter value={20} suffix="+" />
               <p className="text-gray-700 font-medium">Categories</p>
             </motion.div>
 
@@ -260,7 +260,7 @@ export default function Home() {
               whileHover={{ y: -3 }}
               className="text-center cursor-pointer"
             >
-              <AnimatedCounter value={1000} suffix="+" />
+              <AnimatedCounter value={10} suffix="+" />
               <p className="text-gray-700 font-medium">Happy customers</p>
             </motion.div>
           </div>
