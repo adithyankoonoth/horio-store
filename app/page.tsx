@@ -191,7 +191,7 @@ export default function Home() {
             </motion.div>
           </motion.div>
 
-          {/* Dashboard Preview - With Browser Chrome, No Hover Animation */}
+          {/* Dashboard Preview - Raised with Shadow */}
           <motion.div
             initial={{ opacity: 0, y: 80 }}
             animate={{ opacity: 1, y: 0 }}
@@ -199,7 +199,7 @@ export default function Home() {
             className="relative"
           >
             <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent h-32 bottom-0 z-10"></div>
-            <div className="bg-white rounded-2xl border border-gray-300 shadow-2xl overflow-hidden">
+            <div className="bg-white rounded-2xl border border-gray-200 shadow-[0_20px_70px_-10px_rgba(0,0,0,0.15)] overflow-hidden transform translate-y-[-8px]">
               {/* Browser Chrome - 3 Colored Dots */}
               <div className="border-b border-gray-300 p-4 flex items-center gap-2 bg-gray-50">
                 <div className="flex gap-2">
@@ -299,21 +299,22 @@ export default function Home() {
                 key={i}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: i * 0.08 }}
+                transition={{ 
+                  duration: 0.5, 
+                  delay: i * 0.08,
+                  ease: [0.22, 1, 0.36, 1]
+                }}
                 viewport={{ once: true, margin: "-50px" }}
-                whileHover={{ y: -8, borderColor: '#000' }}
-                className="group bg-white border-2 border-gray-300 rounded-xl p-8 hover:shadow-2xl transition-all cursor-pointer"
+                whileHover={{ 
+                  y: -4,
+                  transition: { duration: 0.2 }
+                }}
+                className="group bg-white border-2 border-gray-300 rounded-xl p-8 hover:border-black cursor-pointer transition-all duration-200"
               >
-                <motion.div 
-                  className="text-sm text-gray-600 mb-3 font-semibold"
-                  initial={{ x: -20, opacity: 0 }}
-                  whileInView={{ x: 0, opacity: 1 }}
-                  transition={{ duration: 0.4, delay: i * 0.08 + 0.2 }}
-                  viewport={{ once: true }}
-                >
+                <div className="text-sm text-gray-600 mb-3 font-semibold">
                   {cat.count} solutions
-                </motion.div>
-                <h3 className="text-2xl font-bold mb-2 text-gray-900 group-hover:text-black transition-colors">{cat.title}</h3>
+                </div>
+                <h3 className="text-2xl font-bold mb-2 text-gray-900">{cat.title}</h3>
                 <p className="text-gray-700 font-medium">{cat.desc}</p>
               </motion.div>
             ))}
