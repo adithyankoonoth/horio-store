@@ -403,7 +403,7 @@ export default function Home() {
             viewport={{ once: true }}
           >
             <motion.a
-              href="mailto:hello@horio.store?subject=I'm interested in Horio!&body=Hi Horio team,%0D%0A%0D%0AI'm interested in joining the village and getting early access to your software marketplace.%0D%0A%0D%0APlease keep me updated!%0D%0A%0D%0AThanks"
+              href="mailto:contact@horio.store?subject=I'm interested in Horio!&body=Hi Horio team,%0D%0A%0D%0AI'm interested in joining the village and getting early access to your software marketplace.%0D%0A%0D%0APlease keep me updated!%0D%0A%0D%0AThanks"
               className="inline-block bg-black text-white px-12 py-5 rounded-xl font-semibold hover:bg-gray-800 transition-all text-lg"
               whileHover={{ y: -3 }}
               transition={{ duration: 0.2 }}
