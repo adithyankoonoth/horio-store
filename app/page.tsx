@@ -1,9 +1,33 @@
 'use client'
 
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, useScroll, useTransform, useInView, useMotionValue, useSpring } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
-import { useRef } from 'react'
+import { useRef, useEffect } from 'react'
 import Image from 'next/image'
+
+// Working Counter Component
+function AnimatedCounter({ value, suffix = '' }: { value: number; suffix?: string }) {
+  const ref = useRef<HTMLParagraphElement>(null)
+  const motionValue = useMotionValue(0)
+  const springValue = useSpring(motionValue, { duration: 2000 })
+  const isInView = useInView(ref, { once: true, margin: "-100px" })
+
+  useEffect(() => {
+    if (isInView) {
+      motionValue.set(value)
+    }
+  }, [motionValue, isInView, value])
+
+  useEffect(() => {
+    springValue.on('change', (latest) => {
+      if (ref.current) {
+        ref.current.textContent = Math.floor(latest).toLocaleString() + suffix
+      }
+    })
+  }, [springValue, suffix])
+
+  return <p ref={ref} className="text-5xl font-bold mb-2 text-gray-900">0{suffix}</p>
+}
 
 export default function Home() {
   const containerRef = useRef(null)
@@ -18,7 +42,7 @@ export default function Home() {
 
   return (
     <main ref={containerRef} className="min-h-screen bg-white">
-      {/* Minimal Navigation with animation */}
+      {/* Minimal Navigation */}
       <motion.nav 
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -27,9 +51,9 @@ export default function Home() {
       >
         <div className="max-w-7xl mx-auto px-8 py-5 flex items-center justify-between">
           <motion.div 
-            className="flex items-center gap-2"
-            whileHover={{ scale: 1.05 }}
-            transition={{ type: "spring", stiffness: 400 }}
+            className="flex items-center gap-2 cursor-pointer"
+            whileHover={{ y: -3 }}
+            transition={{ duration: 0.2 }}
           >
             <Image 
               src="/logo.svg" 
@@ -43,24 +67,24 @@ export default function Home() {
             <motion.a 
               href="#" 
               className="text-gray-700 hover:text-black transition-colors font-medium"
-              whileHover={{ y: -2 }}
-              transition={{ type: "spring", stiffness: 400 }}
+              whileHover={{ y: -3 }}
+              transition={{ duration: 0.2 }}
             >
               Features
             </motion.a>
             <motion.a 
               href="#" 
               className="text-gray-700 hover:text-black transition-colors font-medium"
-              whileHover={{ y: -2 }}
-              transition={{ type: "spring", stiffness: 400 }}
+              whileHover={{ y: -3 }}
+              transition={{ duration: 0.2 }}
             >
               Pricing
             </motion.a>
             <motion.a 
               href="#" 
               className="text-gray-700 hover:text-black transition-colors font-medium"
-              whileHover={{ y: -2 }}
-              transition={{ type: "spring", stiffness: 400 }}
+              whileHover={{ y: -3 }}
+              transition={{ duration: 0.2 }}
             >
               Docs
             </motion.a>
@@ -68,15 +92,15 @@ export default function Home() {
           <div className="flex items-center gap-4">
             <motion.button 
               className="text-sm text-gray-700 hover:text-black transition-colors font-medium"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ y: -3 }}
+              transition={{ duration: 0.2 }}
             >
               Sign in
             </motion.button>
             <motion.button 
               className="bg-black text-white px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-800 transition-all"
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ y: -3 }}
+              transition={{ duration: 0.2 }}
             >
               Get started
             </motion.button>
@@ -84,7 +108,7 @@ export default function Home() {
         </div>
       </motion.nav>
 
-      {/* Hero Section with Scroll Animations */}
+      {/* Hero Section */}
       <section className="pt-40 pb-32 px-8">
         <motion.div 
           style={{ opacity, scale, y }}
@@ -107,7 +131,7 @@ export default function Home() {
                 animate={{ scale: [1, 1.2, 1] }}
                 transition={{ duration: 2, repeat: Infinity }}
               />
-              <span className="text-sm text-gray-700 font-medium">Launching early 2026</span>
+              <span className="text-sm text-gray-700 font-medium">Launching early 2025</span>
             </motion.div>
             
             <motion.h1 
@@ -146,8 +170,8 @@ export default function Home() {
             >
               <motion.button 
                 className="group bg-black text-white px-8 py-4 rounded-xl text-base font-semibold hover:bg-gray-800 transition-all flex items-center gap-2 shadow-lg"
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ y: -3 }}
+                transition={{ duration: 0.2 }}
               >
                 Browse software
                 <motion.div
@@ -159,15 +183,15 @@ export default function Home() {
               </motion.button>
               <motion.button 
                 className="px-8 py-4 rounded-xl text-base font-semibold border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white transition-all"
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ y: -3 }}
+                transition={{ duration: 0.2 }}
               >
                 List your product
               </motion.button>
             </motion.div>
           </motion.div>
 
-          {/* Animated Dashboard Preview */}
+          {/* Dashboard Preview - With Browser Chrome, No Hover Animation */}
           <motion.div
             initial={{ opacity: 0, y: 80 }}
             animate={{ opacity: 1, y: 0 }}
@@ -175,12 +199,17 @@ export default function Home() {
             className="relative"
           >
             <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent h-32 bottom-0 z-10"></div>
-            <motion.div 
-              className="bg-white rounded-2xl border border-gray-300 shadow-2xl overflow-hidden"
-              whileHover={{ y: -8, boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)" }}
-              transition={{ duration: 0.4 }}
-            >
-              <div className="overflow-hidden">
+            <div className="bg-white rounded-2xl border border-gray-300 shadow-2xl overflow-hidden">
+              {/* Browser Chrome - 3 Colored Dots */}
+              <div className="border-b border-gray-300 p-4 flex items-center gap-2 bg-gray-50">
+                <div className="flex gap-2">
+                  <div className="w-3 h-3 bg-red-500 rounded-full" />
+                  <div className="w-3 h-3 bg-yellow-500 rounded-full" />
+                  <div className="w-3 h-3 bg-green-500 rounded-full" />
+                </div>
+              </div>
+              {/* Dashboard Image */}
+              <div className="bg-gradient-to-br from-gray-50 to-white">
                 <Image 
                   src="/dashboard.png" 
                   alt="Horio Dashboard Preview" 
@@ -190,46 +219,55 @@ export default function Home() {
                   priority
                 />
               </div>
-            </motion.div>
+            </div>
           </motion.div>
         </motion.div>
       </section>
 
-      {/* Animated Stats */}
+      {/* Stats with Counter Animation */}
       <section className="py-24 px-8 border-y border-gray-300 bg-gray-50">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-3 gap-16">
-            {[
-              { metric: "50+", label: "Software solutions" },
-              { metric: "20+", label: "Categories" },
-              { metric: "10+", label: "Happy customers" }
-            ].map((stat, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: i * 0.15 }}
-                viewport={{ once: true, margin: "-100px" }}
-                whileHover={{ scale: 1.05, y: -4 }}
-                className="text-center"
-              >
-                <motion.p 
-                  className="text-5xl font-bold mb-2 text-gray-900"
-                  initial={{ scale: 0.5, opacity: 0 }}
-                  whileInView={{ scale: 1, opacity: 1 }}
-                  transition={{ duration: 0.5, delay: i * 0.15 + 0.2 }}
-                  viewport={{ once: true }}
-                >
-                  {stat.metric}
-                </motion.p>
-                <p className="text-gray-700 font-medium">{stat.label}</p>
-              </motion.div>
-            ))}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true, margin: "-100px" }}
+              whileHover={{ y: -3 }}
+              className="text-center cursor-pointer"
+            >
+              <AnimatedCounter value={50} suffix="+" />
+              <p className="text-gray-700 font-medium">Software solutions</p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.15 }}
+              viewport={{ once: true, margin: "-100px" }}
+              whileHover={{ y: -3 }}
+              className="text-center cursor-pointer"
+            >
+              <AnimatedCounter value={20} suffix="+" />
+              <p className="text-gray-700 font-medium">Categories</p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              viewport={{ once: true, margin: "-100px" }}
+              whileHover={{ y: -3 }}
+              className="text-center cursor-pointer"
+            >
+              <AnimatedCounter value={10} suffix="+" />
+              <p className="text-gray-700 font-medium">Happy customers</p>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Animated Feature Cards */}
+      {/* Feature Cards */}
       <section className="py-32 px-8 bg-white">
         <div className="max-w-6xl mx-auto">
           <motion.div
@@ -283,7 +321,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Animated Steps */}
+      {/* Steps */}
       <section className="py-32 px-8 bg-gray-50 border-y border-gray-300">
         <div className="max-w-4xl mx-auto">
           <motion.h2 
@@ -325,7 +363,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Animated CTA with Mailto */}
+      {/* CTA */}
       <section className="py-32 px-8 bg-white">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -361,8 +399,8 @@ export default function Home() {
             <motion.a
               href="mailto:hello@horio.store?subject=I'm interested in Horio!&body=Hi Horio team,%0D%0A%0D%0AI'm interested in joining the village and getting early access to your software marketplace.%0D%0A%0D%0APlease keep me updated!%0D%0A%0D%0AThanks"
               className="inline-block bg-black text-white px-12 py-5 rounded-xl font-semibold hover:bg-gray-800 transition-all text-lg"
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ y: -3 }}
+              transition={{ duration: 0.2 }}
             >
               Join the waitlist
             </motion.a>
@@ -370,7 +408,7 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* Animated Footer */}
+      {/* Footer */}
       <motion.footer 
         className="border-t border-gray-300 py-12 px-8 bg-gray-50"
         initial={{ opacity: 0 }}
@@ -380,8 +418,9 @@ export default function Home() {
       >
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <motion.div 
-            className="flex items-center gap-2"
-            whileHover={{ scale: 1.05 }}
+            className="flex items-center gap-2 cursor-pointer"
+            whileHover={{ y: -3 }}
+            transition={{ duration: 0.2 }}
           >
             <Image 
               src="/logo.svg" 
