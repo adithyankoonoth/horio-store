@@ -131,7 +131,7 @@ export default function Home() {
                 animate={{ scale: [1, 1.2, 1] }}
                 transition={{ duration: 2, repeat: Infinity }}
               />
-              <span className="text-sm text-gray-700 font-medium">Launching early 2025</span>
+              <span className="text-sm text-gray-700 font-medium">Launching early 2026</span>
             </motion.div>
             
             <motion.h1 
